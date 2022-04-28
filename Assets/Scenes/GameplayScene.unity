@@ -720,6 +720,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4458118193181357816, guid: ce14ccdb4df34d74f99a0fb5afb49f22, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877063738779541151, guid: ce14ccdb4df34d74f99a0fb5afb49f22, type: 3}
+      propertyPath: maxVelocity
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877063738779541151, guid: ce14ccdb4df34d74f99a0fb5afb49f22, type: 3}
+      propertyPath: speedModifier
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8054417339470533088, guid: ce14ccdb4df34d74f99a0fb5afb49f22, type: 3}
       propertyPath: m_Name
       value: Player
