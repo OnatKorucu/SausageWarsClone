@@ -6,8 +6,9 @@ namespace DefaultNamespace
     {
         public static event Action<int> OnScoreChanged;
 
-        protected override void OnCollected()
+        protected override void BecomeCollected()
         {
+            base.BecomeCollected();
             ChangeScore();
             Destroy(gameObject);
         }
@@ -16,6 +17,5 @@ namespace DefaultNamespace
         {
             OnScoreChanged?.Invoke(score);
         }
-
     }
 }
