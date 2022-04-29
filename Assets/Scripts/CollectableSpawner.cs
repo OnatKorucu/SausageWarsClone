@@ -12,7 +12,7 @@ public class CollectableSpawner : MonoBehaviour
     //[SerializeField] private Vector3 spawnOffset;//TODO: Clean
     [SerializeField, Range(1, 10)] private int startingCollectableCount;
     [SerializeField, Range(1, 20)] private int maximumCollectableCount;
-    private int collectableCountInGame;
+    private volatile int collectableCountInGame;
     
     [SerializeField, Range(0, Mathf.Infinity)] private float baseSpawnInterval;
     [SerializeField, Range(0, Mathf.Infinity)] private float randomSpawnTimeOffset;
@@ -48,13 +48,13 @@ public class CollectableSpawner : MonoBehaviour
         CalculateNextSpawnTime();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         spawnTimeCounter += Time.deltaTime;
 
         if (collectableCountInGame >= maximumCollectableCount) { return; }
 
-        if (!(spawnTimeCounter >= nextSpawnTime)) { return; }
+        if (spawnTimeCounter < nextSpawnTime) { return; }
         
         GameObject collectableToSpawn = PickRandomCollectable();
         SpawnCollectable(collectableToSpawn);
@@ -66,7 +66,12 @@ public class CollectableSpawner : MonoBehaviour
     #region OtherMethods
     private void HandleOnCollected()
     {
+        Debug.Log("xxx HandleOnCollected");
+
         collectableCountInGame--;
+        
+        Debug.Log("xxx collectableCountInGame is: " + collectableCountInGame);
+
     }
 
     private void ClampRandomSpawnTimeOffset()
@@ -95,6 +100,7 @@ public class CollectableSpawner : MonoBehaviour
     private void CalculateNextSpawnTime()
     {
         nextSpawnTime = baseSpawnInterval + (Random.value - 0.5f) * randomSpawnTimeOffset;
+        Debug.Log("NextSpawnTime: " + nextSpawnTime);
     }
 
     private GameObject PickRandomCollectable()
@@ -104,12 +110,17 @@ public class CollectableSpawner : MonoBehaviour
 
     private void SpawnCollectable(GameObject collectableToSpawn)
     {
+        if (collectableCountInGame >= maximumCollectableCount) { return; }
+
         GameObject collectableGameObject = Instantiate(collectableToSpawn);
+        Debug.Log("xxx SPAWN");
 
         collectableGameObject.transform.position = PickSpawnPosition(center, size);;
         collectableGameObject.transform.rotation = Quaternion.identity;
 
         collectableCountInGame++;
+        Debug.Log("xxx collectableCountInGame is: " + collectableCountInGame);
+
     }
 
     private Vector3 PickSpawnPosition(Vector3 center, Vector3 size)//TODO: Clean

@@ -18,7 +18,8 @@ namespace DefaultNamespace
 
         protected virtual void BecomeCollected()
         {
-            OnCollected?.Invoke();;
+            OnCollected?.Invoke();
+            Debug.Log("xxx BecomeCollected");
         }
     }
 }
