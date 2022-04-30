@@ -2,7 +2,7 @@ using System;
 
 namespace DefaultNamespace
 {
-    public class CrystalCollectable : BaseCollectable, IScoreChanger
+    public class CrystalCollectable : BaseCollectableBehaviour, IScoreChanger
     {
         public static event Action<int> OnScoreChanged;
 
